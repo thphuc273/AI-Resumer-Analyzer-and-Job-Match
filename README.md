@@ -1,24 +1,57 @@
-# AI Resume Analyzer & Job Match 🚀
+# React + TypeScript + Vite
 
-An **AI-powered recruitment assistant** that analyzes resumes (CVs) and automatically recommends the most suitable job positions.  
-It leverages **AWS Cloud Services** for scalable storage, data extraction, and AI/ML model inference.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
----
+Currently, two official plugins are available:
 
-## ✨ Features
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-- 📄 **Resume Parsing** – Upload resumes in PDF format, extract structured data using **Amazon Textract**.  
-- 🤖 **AI Skill & Experience Matching** – Process CVs with **AWS Bedrock** to identify candidate skills and compare against job descriptions.  
-- 🔍 **Job Search & Ranking** – Store and search job descriptions in **Amazon OpenSearch / Kendra** with semantic search and ranking.  
-- 💬 **Chatbot Advisor** – Ask natural language questions like *“Which jobs fit this CV?”* and receive AI-powered recommendations.  
-- 📊 **Dashboard** – Upload CVs, view extracted info, and explore the **Top 5 job matches** with detailed reasoning.  
+## Expanding the ESLint configuration
 
----
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## 🏗️ Architecture
-![System Architecture](docs/overview_architecture.png)
-- **Frontend:** ReactJS + AWS Amplify / S3 + CloudFront  
-- **Backend:** Python FastAPI, AWS Lambda + API Gateway + Step Functions  
-- **AI/ML:** Amazon Textract, AWS Bedrock (Claude, Titan) / SageMaker  
-- **Database & Search:** S3 (raw files), DynamoDB (metadata), OpenSearch / Kendra (job descriptions), RDS Aurora (structured storage)  
-- **Security:** IAM, KMS, CloudTrail, GuardDuty  
+```js
+export default tseslint.config({
+  extends: [
+    // Remove ...tseslint.configs.recommended and replace with this
+    ...tseslint.configs.recommendedTypeChecked,
+    // Alternatively, use this for stricter rules
+    ...tseslint.configs.strictTypeChecked,
+    // Optionally, add this for stylistic rules
+    ...tseslint.configs.stylisticTypeChecked,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
+
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default tseslint.config({
+  extends: [
+    // other configs...
+    // Enable lint rules for React
+    reactX.configs['recommended-typescript'],
+    // Enable lint rules for React DOM
+    reactDom.configs.recommended,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
